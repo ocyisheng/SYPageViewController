@@ -56,6 +56,8 @@
     self.pageViewController.view.frame = viewConroller.view.bounds;
     [viewConroller addChildViewController:self.pageViewController];
     [viewConroller.view addSubview:self.pageViewController.view];
+    //获取滚动视图
+    [self contentScrollView];
 }
 
 - (void)showFirstVisiableViewControllerWithPageNumber:(NSUInteger)pageNumber{
@@ -105,6 +107,22 @@
 - (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
     UIViewController<SYPageViewControllerProtocol> *svc = [self nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)viewController isAfter:YES];
     return  [self.dataSource didDisplayVisiableViewController:svc];
+}
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    NSLog(@"contentOffset:%@",NSStringFromCGPoint(self.contentScrollView.contentOffset));
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    NSLog(@"BeginDragging");
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    NSLog(@"DidEndDragging");
+}
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+     NSLog(@"BeginDecelerating");
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+     NSLog(@"DidEndDecelerating");
 }
 #pragma mark - Private Method
 - (void)showNextConformsProtocolViewControllerWithDirection:(UIPageViewControllerNavigationDirection)direction

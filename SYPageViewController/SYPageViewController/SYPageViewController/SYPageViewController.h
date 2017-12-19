@@ -26,8 +26,17 @@
 
 @end
 
+@protocol SYPageViewControllerDelegate <NSObject>
+@optional
+- (void)contentScrollViewDidScroll:(UIScrollView *)contentScrollView;
+- (void)contentScrollViewWillBeginDragging:(UIScrollView *)contentScrollView;
+- (void)contentScrollViewDidEndDragging:(UIScrollView *)contentScrollView;
+
+@end
 @interface SYPageViewController : NSObject
+@property (nonatomic,strong,readonly) UIScrollView *contentScrollView;
 @property (nonatomic,weak) id<SYPageViewControllerDataSource> dataSource;
+@property (nonatomic,weak) id<SYPageViewControllerDelegate> delegate;
 
 /**
  初始化 SYPageViewController；默认水平滚动，书脊宽为8.f

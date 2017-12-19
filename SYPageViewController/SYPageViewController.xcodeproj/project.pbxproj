@@ -16,6 +16,7 @@
 		5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64435E1FE8E5BC0024AD30 /* PageViewController.m */; };
 		5D6443641FE8E5BC0024AD30 /* PageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */; };
 		5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */; };
+		5D6443681FE8F8F50024AD30 /* SYTitleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,8 @@
 		5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageViewController.xib; sourceTree = "<group>"; };
 		5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPageViewController.m; sourceTree = "<group>"; };
 		5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPageViewController.h; sourceTree = "<group>"; };
+		5D6443661FE8F8F50024AD30 /* SYTitleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleScrollView.h; sourceTree = "<group>"; };
+		5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,8 @@
 			children = (
 				5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */,
 				5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */,
+				5D6443661FE8F8F50024AD30 /* SYTitleScrollView.h */,
+				5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */,
 			);
 			path = SYPageViewController;
 			sourceTree = "<group>";
@@ -176,6 +181,7 @@
 				5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */,
 				5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */,
 				5D6443481FE8E54F0024AD30 /* main.m in Sources */,
+				5D6443681FE8F8F50024AD30 /* SYTitleScrollView.m in Sources */,
 				5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

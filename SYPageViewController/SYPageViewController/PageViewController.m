@@ -34,7 +34,7 @@
     
     [self.pageViewController addChildViewControllerTo:self];
     
-    [self.pageViewController showFirstVisiableViewControllerWithPageNumber:0];
+    [self.pageViewController showFirstVisiableViewControllerWithPageNumber:1];
 
     [self.view bringSubviewToFront:self.nextButton];
     [self.view bringSubviewToFront:self.lastButton];
