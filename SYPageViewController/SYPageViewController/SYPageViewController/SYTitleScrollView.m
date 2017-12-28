@@ -8,27 +8,23 @@
 
 #import "SYTitleScrollView.h"
 
-
 @interface SYCollectionViewItem : UICollectionViewCell
-@property (nonatomic,strong,readonly) UIButton *titleButton;
+@property (nonatomic,strong) UILabel *normalTitleLabel;
+@property (nonatomic,strong) UILabel *selectedTitleLabel;
+
 @end
 
 @interface SYTitleScrollView ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionView *contentCollectionView;
+@property (nonatomic,strong) NSMutableArray<NSNumber *> *buttonStateArray;
+@property (nonatomic,assign) NSInteger currentSelectedIndex;
 @end
 @implementation SYTitleScrollView
-/*
- //选中selectedItem，记录indexPath
- //字体放大
- //
- 
- */
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self addSubview:self.contentCollectionView];
-        
     }
     return self;
 }
@@ -36,17 +32,37 @@
     [super layoutSubviews];
     self.contentCollectionView.frame = self.bounds;
 }
-#pragma mark - UICollectionViewDelegateFlowLayout
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    
-    //
-    return CGSizeMake(0, CGRectGetHeight(self.bounds));
+- (void)setTitleLabelColorWithSelectedInexPath:(NSIndexPath *)indexPath{
+    self.currentSelectedIndex = indexPath.row;
+    SYCollectionViewItem *item = (SYCollectionViewItem *)[self.contentCollectionView  cellForItemAtIndexPath:indexPath];
+    NSArray *items = [self.contentCollectionView visibleCells];
+    [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        SYCollectionViewItem *currentItem = (SYCollectionViewItem *)obj;
+        if (item == currentItem) {
+            currentItem.selectedTitleLabel.hidden = NO;
+            currentItem.normalTitleLabel.hidden = YES;
+        }else{
+            currentItem.selectedTitleLabel.hidden = YES;
+            currentItem.normalTitleLabel.hidden = NO;
+        }
+    }];
 }
 
+- (void)setSelectedItemAtIndex:(NSUInteger)index{
+    _currentSelectedIndex = index;
+    [self setTitleLabelColorWithSelectedInexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+}
+
+#pragma mark - UICollectionViewDelegateFlowLayout
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+    NSString * title = self.titleItems[indexPath.row];
+    CGFloat width = [title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f]}].width;
+    return CGSizeMake(width, CGRectGetHeight(self.bounds));
+}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self.contentCollectionView deselectItemAtIndexPath:indexPath animated:NO];
-    SYCollectionViewItem *item = [self.contentCollectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SYCollectionViewItem class]) forIndexPath:indexPath];
-    item.titleButton.selected = YES;
+
+    [self setTitleLabelColorWithSelectedInexPath:indexPath];
     if (self.didSelectedItemBlock) {
         self.didSelectedItemBlock(indexPath.row);
     }
@@ -57,17 +73,34 @@
 }
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     SYCollectionViewItem *item = [self.contentCollectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SYCollectionViewItem class]) forIndexPath:indexPath];
-    item.titleButton.titleLabel.text = self.titleItems[indexPath.row];
+    item.normalTitleLabel.text = self.titleItems[indexPath.row];
+    item.selectedTitleLabel.text = self.titleItems[indexPath.row];
+    if (indexPath.row == self.currentSelectedIndex) {
+        item.normalTitleLabel.hidden = YES;
+        item.selectedTitleLabel.hidden = NO;
+    }else{
+        item.normalTitleLabel.hidden = NO;
+        item.selectedTitleLabel.hidden = YES;
+    }
+    item.backgroundColor = [UIColor greenColor];
     return item;
 }
+
 - (UICollectionView *)contentCollectionView{
     if (!_contentCollectionView) {
         UICollectionViewFlowLayout*flowLayout = [[UICollectionViewFlowLayout alloc]init];
         flowLayout.minimumLineSpacing = 0.f;
+        flowLayout.minimumInteritemSpacing = 4.f;
         flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        _contentCollectionView = [[UICollectionView alloc]initWithFrame:CGRectZero collectionViewLayout:flowLayout];
+        _contentCollectionView = [[UICollectionView alloc]initWithFrame:self.bounds collectionViewLayout:flowLayout];
+        _contentCollectionView.backgroundColor = [UIColor whiteColor];
+        _contentCollectionView.showsHorizontalScrollIndicator = NO;
+        _contentCollectionView.showsVerticalScrollIndicator= NO;
         _contentCollectionView.dataSource = self;
+        _contentCollectionView.delegate = self;
+        _contentCollectionView.contentInset = UIEdgeInsetsMake(0, 4.f, 0, 4.f);
         [_contentCollectionView registerClass:[SYCollectionViewItem class] forCellWithReuseIdentifier:NSStringFromClass([SYCollectionViewItem class])];
+        _contentCollectionView.backgroundColor = [UIColor whiteColor];
     }
     return _contentCollectionView;
 }
@@ -79,18 +112,24 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _titleButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_titleButton setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
-        [_titleButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _titleButton.titleLabel.font = [UIFont systemFontOfSize:13.f];
-        [self.backgroundView addSubview:self.titleButton];
+        _normalTitleLabel = [[UILabel alloc]initWithFrame:self.bounds];
+        _normalTitleLabel.font = [UIFont systemFontOfSize:15.f];
+        _normalTitleLabel.textColor = [UIColor blackColor];
+        _normalTitleLabel.textAlignment = NSTextAlignmentCenter;
+        [self.contentView addSubview:_normalTitleLabel];
+        _selectedTitleLabel = [[UILabel alloc]initWithFrame:self.bounds];
+        _selectedTitleLabel.font = [UIFont systemFontOfSize:17.f];
+         _selectedTitleLabel.textAlignment = NSTextAlignmentCenter;
+        _selectedTitleLabel.textColor = [UIColor redColor];
+        [self.contentView addSubview:_selectedTitleLabel];
     }
     return self;
 }
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    self.titleButton.frame = self.backgroundView.bounds;
+    self.normalTitleLabel.frame = self.contentView.bounds;
+    self.selectedTitleLabel.frame = self.contentView.bounds;
 }
 
 @end

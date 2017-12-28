@@ -21,35 +21,17 @@
 
 
 @end
-/*
- 
- 1.使用3个storyVC 交替使用，减少vc的创建量
- 2.使用maxPages限制总的页码数，
- 3.使用currenPageNumber 标记该storyVC 在 pageViewController中的位置
- */
+
 @implementation PageViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self.pageViewController addChildViewControllerTo:self];
+    [self.pageViewController addToParentViewController:self];
     
-    [self.pageViewController showFirstVisiableViewControllerWithPageNumber:1];
-
     [self.view bringSubviewToFront:self.nextButton];
     [self.view bringSubviewToFront:self.lastButton];
-    
-    /*
-     
-     代理
-     1.initFirstVC
-     2.lastVC 和 nextVC
-     willDisplay nextVC willDisplayLastVC
-     设置
-     1.书脊宽
-     2.翻页类型
-     3
-     */
+
 }
 
 - (UIViewController<SYPageViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerProtocol> *)visiableViewController{
@@ -66,7 +48,7 @@
 }
 - (SYPageViewController *)pageViewController{
     if (_pageViewController == nil) {
-        _pageViewController = [[SYPageViewController alloc]initWithConformsProtocolViewController:NSStringFromClass([MyStoryVC class])];
+        _pageViewController = [[SYPageViewController alloc]initWithConformsProtocolViewControllerClass:[MyStoryVC class]];
         _pageViewController.dataSource = self;
     }
     return _pageViewController;
@@ -79,15 +61,15 @@
     [super viewDidLoad];
 
     self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 44)];
-    
+
     self.label.backgroundColor = [UIColor grayColor];
-    
+
     self.label.textColor = [UIColor blueColor];
-    
+
     self.label.textAlignment = NSTextAlignmentCenter;
-    
+
     [self.view addSubview:self.label];
-    
+
 }
 
 @end

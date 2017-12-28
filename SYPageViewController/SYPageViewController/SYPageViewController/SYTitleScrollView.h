@@ -11,6 +11,7 @@
 @interface SYTitleScrollView : UIView
 @property (nonatomic,strong) NSArray *titleItems;
 @property (nonatomic,assign) UICollectionViewScrollDirection scrollDirection;
-@property (nonatomic,copy) void (^didSelectedItemBlock)(NSInteger selecedItemIndex);
+@property (nonatomic,copy) void (^didSelectedItemBlock)(NSUInteger selecedItemIndex);
 
+- (void)setSelectedItemAtIndex:(NSUInteger)index;
 @end
