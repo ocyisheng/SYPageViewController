@@ -34,6 +34,7 @@
 
 @end
 @interface SYPageViewController : NSObject
+@property (nonatomic,strong,readonly) UIViewController<SYPageViewControllerProtocol> *visiableViewController;
 @property (nonatomic,assign,readonly) NSUInteger visiableViewControllerCurrenPageNumber;
 @property (nonatomic,strong,readonly) UIScrollView *contentScrollView;
 @property (nonatomic,weak) id<SYPageViewControllerDataSource> dataSource;
@@ -94,10 +95,9 @@
  */
 - (void)setMaxPages:(NSUInteger)maxPages;
 
-
 /**
- 跳转指定页面
-
+ 跳转指定页面;默认显示第一个页面
+ 
  @param pageNumage 指定页面
  @param direction UIPageViewControllerNavigationDirection
  */

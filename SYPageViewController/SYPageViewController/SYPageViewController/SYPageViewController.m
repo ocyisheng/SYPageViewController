@@ -45,7 +45,7 @@
 }
 - (instancetype)initWithConformsProtocolViewControllerClass:(Class)vcClass
                                  navigationOrientation:(UIPageViewControllerNavigationOrientation)orientation
-                                           pageSpacing:(CGFloat)pageSpacing{
+                                                pageSpacing:(CGFloat)pageSpacing{
     if (self = [super init]) {
         _navigationOrientation = orientation;
         _pageSpacing = pageSpacing;
@@ -54,6 +54,8 @@
     }
     return self;
 }
+
+#pragma mark - Public method
 - (void)addToParentViewController:(UIViewController *)parentViewController{
     [self addToParentViewController:parentViewController frame:parentViewController.view.frame];
 }
@@ -63,11 +65,14 @@
     [parentViewController.view addSubview:self.pageViewController.view];
     //获取滚动视图
     [self contentScrollView];
+    
+    //默认显示第一个
+    [self showViewControllerWithPageNumber:0 direction:UIPageViewControllerNavigationDirectionForward];
 }
 
 - (void)showLastVisiableViewController{
     __weak typeof(self) weakSelf = self;
-    [self showNextConformsProtocolViewControllerWithDirection:UIPageViewControllerNavigationDirectionReverse
+    [self _showNextConformsProtocolViewControllerWithDirection:UIPageViewControllerNavigationDirectionReverse
                          animation:YES
                         completion:^(BOOL finished, UIViewController<SYPageViewControllerProtocol> *conformsProtocolViewController) {
                             [weakSelf.dataSource didDisplayVisiableViewController:conformsProtocolViewController];
@@ -75,89 +80,19 @@
 }
 - (void)showNextVisiableViewController{
     __weak typeof(self) weakSelf = self;
-    [self showNextConformsProtocolViewControllerWithDirection:UIPageViewControllerNavigationDirectionForward
+    [self _showNextConformsProtocolViewControllerWithDirection:UIPageViewControllerNavigationDirectionForward
                          animation:YES
                         completion:^(BOOL finished, UIViewController<SYPageViewControllerProtocol> *conformsProtocolViewController) {
                            [weakSelf.dataSource didDisplayVisiableViewController:conformsProtocolViewController];
                         }];
 }
-
-- (NSUInteger)visiableViewControllerCurrenPageNumber{
-    UIViewController<SYPageViewControllerProtocol> *vc  = self.pageViewController.viewControllers.firstObject;
-    return vc.currenPageNumber;
-}
-- (UIViewController <SYPageViewControllerProtocol> *)viewControllerWithPageNumber:(NSUInteger)pageNumber{
-    for (UIViewController <SYPageViewControllerProtocol> *vc in self.conformsProtocolVCArray) {
-        if (vc.currenPageNumber == pageNumber) {
-            return vc;
-        }
-    }
-    return nil;
-}
-#pragma mark - UIPageViewControllerDataSource
-- (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
-    UIViewController<SYPageViewControllerProtocol> *svc = [self nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)viewController direction:UIPageViewControllerNavigationDirectionReverse];
-    return  [self.dataSource didDisplayVisiableViewController:svc];
-}
-- (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
-    UIViewController<SYPageViewControllerProtocol> *svc = [self nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)viewController direction:UIPageViewControllerNavigationDirectionForward];
-    return  [self.dataSource didDisplayVisiableViewController:svc];
-}
-#pragma mark - UIScrollViewDelegate
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        //当pageViewController初始化时，获取偏移量
-        self.contentOffset = self.contentScrollView.contentOffset;
-    });
-    if (self.contentOffset.x != self.contentScrollView.contentOffset.x) {
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewDidScroll:)]) {
-            [self.delegate pageViewController:self contentScrollViewDidScroll:self.contentScrollView];
-        }
-    }
-}
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewWillBeginScroll:)]) {
-        [self.delegate pageViewController:self contentScrollViewWillBeginScroll:self.contentScrollView];
-    }
-}
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-}
-- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
-}
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewDidEndScroll:)]) {
-        [self.delegate pageViewController:self contentScrollViewDidEndScroll:self.contentScrollView];
-    }
-}
-#pragma mark - Private method
-- (void)showNextConformsProtocolViewControllerWithDirection:(UIPageViewControllerNavigationDirection)direction
-                       animation:(BOOL)animation
-                      completion:(void (^ __nullable)(BOOL finished,UIViewController<SYPageViewControllerProtocol> *conformsProtocolViewController))completion{
-    
-    UIViewController<SYPageViewControllerProtocol> *nextVC = [self nextConformsProtocolViewControllerWithCurrentVC:self.pageViewController.viewControllers.lastObject
-                                               direction:direction];
-    if (nextVC == nil) {
-        completion(YES,nil);
-        return;
-    }
-    [self.pageViewController setViewControllers:@[nextVC]
-                          direction:direction
-                           animated:animation
-                         completion:^(BOOL finished) {
-                             //调用块
-                             completion(finished,nextVC);
-                         }];
-}
-
 - (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage direction:(UIPageViewControllerNavigationDirection)direction {
     //每次都从第一个开始开始移动
     //依次查找对应currentPageNumber 左中右 vc
     //可以提前将对应currentPageNumber的，-1 currentPageNumber + 1 这三个VC的下标存储起来，减少循环次数
-    
     NSUInteger maxCount = 0;
     for (int i = 0; i < self.conformsProtocolVCArray.count; i ++) {
-      UIViewController<SYPageViewControllerProtocol> * pageNumberVC= self.conformsProtocolVCArray[i];
+        UIViewController<SYPageViewControllerProtocol> * pageNumberVC= self.conformsProtocolVCArray[i];
         pageNumberVC.currenPageNumber = i;
     }
     UIViewController <SYPageViewControllerProtocol > *nextVC =self.conformsProtocolVCArray[0];
@@ -165,15 +100,43 @@
         if (maxCount == pageNumage) {
             break;
         }
-       nextVC = [self nextConformsProtocolViewControllerWithCurrentVC:[self viewControllerWithPageNumber:maxCount] direction:UIPageViewControllerNavigationDirectionForward];
-         maxCount ++;
+        nextVC = [self _nextConformsProtocolViewControllerWithCurrentVC:[self _viewControllerWithPageNumber:maxCount] direction:UIPageViewControllerNavigationDirectionForward];
+        maxCount ++;
     }
     __weak typeof(self) weakSelf  = self;
     [self.pageViewController setViewControllers:@[nextVC] direction:direction animated:NO completion:^(BOOL finished) {
         [weakSelf.dataSource didDisplayVisiableViewController:nextVC];
     }];
 }
-- (UIViewController<SYPageViewControllerProtocol> *)nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)conformsProtocolViewController direction:(UIPageViewControllerNavigationDirection)direction{
+- (UIViewController<SYPageViewControllerProtocol> *)visiableViewController{
+    return self.pageViewController.viewControllers.firstObject;
+}
+- (NSUInteger)visiableViewControllerCurrenPageNumber{
+    UIViewController<SYPageViewControllerProtocol> *vc  = self.pageViewController.viewControllers.firstObject;
+    return vc.currenPageNumber;
+}
+#pragma mark - Private method
+
+- (void)_showNextConformsProtocolViewControllerWithDirection:(UIPageViewControllerNavigationDirection)direction
+                                                   animation:(BOOL)animation
+                                                  completion:(void (^ __nullable)(BOOL finished,UIViewController<SYPageViewControllerProtocol> *conformsProtocolViewController))completion{
+    
+    UIViewController<SYPageViewControllerProtocol> *nextVC = [self _nextConformsProtocolViewControllerWithCurrentVC:self.pageViewController.viewControllers.lastObject
+                                                                                                          direction:direction];
+    if (nextVC == nil) {
+        completion(YES,nil);
+        return;
+    }
+    [self.pageViewController setViewControllers:@[nextVC]
+                                      direction:direction
+                                       animated:animation
+                                     completion:^(BOOL finished) {
+                                         //调用块
+                                         completion(finished,nextVC);
+                                     }];
+}
+
+- (UIViewController<SYPageViewControllerProtocol> *)_nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)conformsProtocolViewController direction:(UIPageViewControllerNavigationDirection)direction{
     
     BOOL isAfter = (direction == UIPageViewControllerNavigationDirectionForward) ? YES : NO;
     
@@ -213,6 +176,50 @@
     UIViewController<SYPageViewControllerProtocol> *myVC  = [self.conformsProtocolVCArray objectAtIndex:vcIndex];
     myVC.currenPageNumber = currenPageNumber;
     return myVC;
+}
+- (UIViewController <SYPageViewControllerProtocol> *)_viewControllerWithPageNumber:(NSUInteger)pageNumber{
+    for (UIViewController <SYPageViewControllerProtocol> *vc in self.conformsProtocolVCArray) {
+        if (vc.currenPageNumber == pageNumber) {
+            return vc;
+        }
+    }
+    return nil;
+}
+#pragma mark - UIPageViewControllerDataSource
+- (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController{
+    UIViewController<SYPageViewControllerProtocol> *svc = [self _nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)viewController direction:UIPageViewControllerNavigationDirectionReverse];
+    return  [self.dataSource didDisplayVisiableViewController:svc];
+}
+- (nullable UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController{
+    UIViewController<SYPageViewControllerProtocol> *svc = [self _nextConformsProtocolViewControllerWithCurrentVC:(UIViewController<SYPageViewControllerProtocol> *)viewController direction:UIPageViewControllerNavigationDirectionForward];
+    return  [self.dataSource didDisplayVisiableViewController:svc];
+}
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        //当pageViewController初始化时，获取偏移量
+        self.contentOffset = self.contentScrollView.contentOffset;
+    });
+    if (self.contentOffset.x != self.contentScrollView.contentOffset.x) {
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewDidScroll:)]) {
+            [self.delegate pageViewController:self contentScrollViewDidScroll:self.contentScrollView];
+        }
+    }
+}
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewWillBeginScroll:)]) {
+        [self.delegate pageViewController:self contentScrollViewWillBeginScroll:self.contentScrollView];
+    }
+}
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+}
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView{
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewDidEndScroll:)]) {
+        [self.delegate pageViewController:self contentScrollViewDidEndScroll:self.contentScrollView];
+    }
 }
 
 #pragma mark - Getter method

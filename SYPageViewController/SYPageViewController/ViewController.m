@@ -16,32 +16,40 @@
 @interface MyStoryVC2 : UIViewController<SYPageViewControllerProtocol>
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,assign) NSUInteger currenPageNumber;
+
 @end
 
 @interface ViewController ()<SYPageViewControllerDataSource,SYPageViewControllerDelegate>
 @property (nonatomic,strong) SYTitleScrollView *titleView;
 @property (nonatomic,strong) SYPageViewController *pageViewController;
+@property (weak, nonatomic) IBOutlet UIButton *pushButton;
 @end
 
 @implementation ViewController
+- (IBAction)push:(id)sender {
+    
+    [self.navigationController pushViewController:[[PageViewController alloc]init] animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
      self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:self.titleView];
-    [self.pageViewController setMaxPages:self.titleView.titleItems.count];
     [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 34, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 34)];
+      [self.pageViewController showViewControllerWithPageNumber:3 direction:UIPageViewControllerNavigationDirectionForward];
     
-    [self.titleView setSelectedItemAtIndex:0 animation:NO];
-    
+    [self.titleView setSelectedItemAtIndex:3 animation:NO];
     __weak typeof(self) weakSelf = self;
     [self.titleView setDidSelectedItemBlock:^(NSUInteger selectedItemIndex) {
         [ weakSelf.pageViewController showViewControllerWithPageNumber:selectedItemIndex direction:selectedItemIndex > weakSelf.pageViewController.visiableViewControllerCurrenPageNumber ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse];
     }];
     
-    [self.pageViewController showViewControllerWithPageNumber:0 direction:UIPageViewControllerNavigationDirectionForward];
+  
     
+    
+    [self.view bringSubviewToFront:self.pushButton];
+
 }
 #pragma mark - SYPageViewControllerDataSource
 - (UIViewController<SYPageViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerProtocol> *)visiableViewController{
@@ -70,6 +78,7 @@
 - (SYPageViewController *)pageViewController{
     if (_pageViewController == nil) {
         _pageViewController = [[SYPageViewController alloc]initWithConformsProtocolViewControllerClass:[MyStoryVC2 class]];
+         [_pageViewController setMaxPages:self.titleView.titleItems.count];
         _pageViewController.dataSource = self;
         _pageViewController.delegate = self;
     }
@@ -99,4 +108,6 @@
 }
 
 
+- (IBAction)pushButton:(id)sender {
+}
 @end
