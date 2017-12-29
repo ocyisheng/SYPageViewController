@@ -11,19 +11,21 @@
 @interface SYCollectionViewItem : UICollectionViewCell
 @property (nonatomic,strong) UILabel *normalTitleLabel;
 @property (nonatomic,strong) UILabel *selectedTitleLabel;
-
 @end
 
 @interface SYTitleScrollView ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionView *contentCollectionView;
 @property (nonatomic,strong) NSMutableArray<NSNumber *> *buttonStateArray;
 @property (nonatomic,assign) NSInteger currentSelectedIndex;
+@property (nonatomic,assign) UICollectionViewScrollDirection scrollDirection;
+
 @end
 @implementation SYTitleScrollView
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        self.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         [self addSubview:self.contentCollectionView];
     }
     return self;
@@ -32,37 +34,41 @@
     [super layoutSubviews];
     self.contentCollectionView.frame = self.bounds;
 }
-- (void)setTitleLabelColorWithSelectedInexPath:(NSIndexPath *)indexPath{
+- (void)setTitleLabelColorWithSelectedInexPath:(NSIndexPath *)indexPath animation:(BOOL)animation{
     self.currentSelectedIndex = indexPath.row;
     SYCollectionViewItem *item = (SYCollectionViewItem *)[self.contentCollectionView  cellForItemAtIndexPath:indexPath];
     NSArray *items = [self.contentCollectionView visibleCells];
     [items enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         SYCollectionViewItem *currentItem = (SYCollectionViewItem *)obj;
-        if (item == currentItem) {
+        if (item == currentItem)
+        {
             currentItem.selectedTitleLabel.hidden = NO;
             currentItem.normalTitleLabel.hidden = YES;
-        }else{
+            
+        }else
+        {
             currentItem.selectedTitleLabel.hidden = YES;
             currentItem.normalTitleLabel.hidden = NO;
         }
     }];
+    
+    [self.contentCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:self.scrollDirection == UICollectionViewScrollDirectionHorizontal ? UICollectionViewScrollPositionCenteredHorizontally :UICollectionViewScrollPositionCenteredVertically animated:animation];
 }
 
-- (void)setSelectedItemAtIndex:(NSUInteger)index{
+- (void)setSelectedItemAtIndex:(NSUInteger)index animation:(BOOL)animation{
     _currentSelectedIndex = index;
-    [self setTitleLabelColorWithSelectedInexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    [self setTitleLabelColorWithSelectedInexPath:[NSIndexPath indexPathForRow:index inSection:0] animation:animation];
 }
-
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     NSString * title = self.titleItems[indexPath.row];
-    CGFloat width = [title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:17.f]}].width;
+    CGFloat width = [title sizeWithAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:16.f]}].width;
     return CGSizeMake(width, CGRectGetHeight(self.bounds));
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self.contentCollectionView deselectItemAtIndexPath:indexPath animated:NO];
 
-    [self setTitleLabelColorWithSelectedInexPath:indexPath];
+    [self setTitleLabelColorWithSelectedInexPath:indexPath animation:YES];
     if (self.didSelectedItemBlock) {
         self.didSelectedItemBlock(indexPath.row);
     }
@@ -75,14 +81,16 @@
     SYCollectionViewItem *item = [self.contentCollectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SYCollectionViewItem class]) forIndexPath:indexPath];
     item.normalTitleLabel.text = self.titleItems[indexPath.row];
     item.selectedTitleLabel.text = self.titleItems[indexPath.row];
-    if (indexPath.row == self.currentSelectedIndex) {
+    if (indexPath.row == self.currentSelectedIndex)
+    {
         item.normalTitleLabel.hidden = YES;
         item.selectedTitleLabel.hidden = NO;
-    }else{
+        
+    }else
+    {
         item.normalTitleLabel.hidden = NO;
         item.selectedTitleLabel.hidden = YES;
     }
-    item.backgroundColor = [UIColor greenColor];
     return item;
 }
 
@@ -113,12 +121,12 @@
     self = [super initWithFrame:frame];
     if (self) {
         _normalTitleLabel = [[UILabel alloc]initWithFrame:self.bounds];
-        _normalTitleLabel.font = [UIFont systemFontOfSize:15.f];
+        _normalTitleLabel.font = [UIFont systemFontOfSize:14.f];
         _normalTitleLabel.textColor = [UIColor blackColor];
         _normalTitleLabel.textAlignment = NSTextAlignmentCenter;
         [self.contentView addSubview:_normalTitleLabel];
         _selectedTitleLabel = [[UILabel alloc]initWithFrame:self.bounds];
-        _selectedTitleLabel.font = [UIFont systemFontOfSize:17.f];
+        _selectedTitleLabel.font = [UIFont systemFontOfSize:16.f];
          _selectedTitleLabel.textAlignment = NSTextAlignmentCenter;
         _selectedTitleLabel.textColor = [UIColor redColor];
         [self.contentView addSubview:_selectedTitleLabel];

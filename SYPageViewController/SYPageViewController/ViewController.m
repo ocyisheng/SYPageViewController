@@ -31,16 +31,16 @@
     
     [self.view addSubview:self.titleView];
     [self.pageViewController setMaxPages:self.titleView.titleItems.count];
-    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 40, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 40)];
+    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 34, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 34)];
     
-    [self.titleView setSelectedItemAtIndex:18];
+    [self.titleView setSelectedItemAtIndex:0 animation:NO];
     
     __weak typeof(self) weakSelf = self;
     [self.titleView setDidSelectedItemBlock:^(NSUInteger selectedItemIndex) {
-        [ weakSelf.pageViewController showViewControllerWithPageNumber:selectedItemIndex direction:selectedItemIndex > weakSelf.pageViewController.visiableViewControllerCurrenPageNumber ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse animation:NO];
+        [ weakSelf.pageViewController showViewControllerWithPageNumber:selectedItemIndex direction:selectedItemIndex > weakSelf.pageViewController.visiableViewControllerCurrenPageNumber ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse];
     }];
     
-    [self.pageViewController showViewControllerWithPageNumber:18 direction:UIPageViewControllerNavigationDirectionForward animation:NO];
+    [self.pageViewController showViewControllerWithPageNumber:0 direction:UIPageViewControllerNavigationDirectionForward];
     
 }
 #pragma mark - SYPageViewControllerDataSource
@@ -51,18 +51,16 @@
 }
 #pragma mark - SYPageViewControllerDelegate
 - (void)pageViewController:(SYPageViewController *)pageViewController contentScrollViewWillBeginScroll:(UIScrollView *)contentScrollView{
-     NSLog(@"begain--contentOffset:%@",NSStringFromCGPoint(contentScrollView.contentOffset));
 }
 - (void)pageViewController:(SYPageViewController *)pageViewController contentScrollViewDidScroll:(UIScrollView *)contentScrollView{
-    NSLog(@"contentOffset:%@",NSStringFromCGPoint(contentScrollView.contentOffset));
 }
 - (void)pageViewController:(SYPageViewController *)pageViewController contentScrollViewDidEndScroll:(UIScrollView *)contentScrollView{
     
-    [self.titleView setSelectedItemAtIndex:pageViewController.visiableViewControllerCurrenPageNumber];
+    [self.titleView setSelectedItemAtIndex:pageViewController.visiableViewControllerCurrenPageNumber animation:YES];
 }
 - (SYTitleScrollView *)titleView{
     if (!_titleView) {
-        _titleView = [[SYTitleScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame),  CGRectGetWidth(self.view.bounds), 40.f)];
+        _titleView = [[SYTitleScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame),  CGRectGetWidth(self.view.bounds), 34)];
         _titleView.titleItems = @[@"测试1",@"测试2",@"测试3",@"测试4测试4",@"测试5",@"测试6",@"测试7测试7",@"测试8",@"测试测试9",@"测试10",@"测试11",@"测试12",@"测试4测试13",@"测试14",@"测试16",@"测试7测试17",@"测试18",@"测试测试19",@"测试20"];
     }
     

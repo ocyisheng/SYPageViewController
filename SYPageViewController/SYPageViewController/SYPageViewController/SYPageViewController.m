@@ -150,7 +150,7 @@
                          }];
 }
 
-- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage direction:(UIPageViewControllerNavigationDirection)direction animation:(BOOL)animation {
+- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage direction:(UIPageViewControllerNavigationDirection)direction {
     //每次都从第一个开始开始移动
     //依次查找对应currentPageNumber 左中右 vc
     //可以提前将对应currentPageNumber的，-1 currentPageNumber + 1 这三个VC的下标存储起来，减少循环次数
@@ -169,7 +169,7 @@
          maxCount ++;
     }
     __weak typeof(self) weakSelf  = self;
-    [self.pageViewController setViewControllers:@[nextVC] direction:direction animated:animation completion:^(BOOL finished) {
+    [self.pageViewController setViewControllers:@[nextVC] direction:direction animated:NO completion:^(BOOL finished) {
         [weakSelf.dataSource didDisplayVisiableViewController:nextVC];
     }];
 }

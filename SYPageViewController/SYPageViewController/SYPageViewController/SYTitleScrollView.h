@@ -10,8 +10,9 @@
 
 @interface SYTitleScrollView : UIView
 @property (nonatomic,strong) NSArray *titleItems;
-@property (nonatomic,assign) UICollectionViewScrollDirection scrollDirection;
 @property (nonatomic,copy) void (^didSelectedItemBlock)(NSUInteger selecedItemIndex);
-
-- (void)setSelectedItemAtIndex:(NSUInteger)index;
+- (void)setSelectedItemAtIndex:(NSUInteger)index animation:(BOOL)animation;
+//- (void)setTitleColor:(UIColor *)titleColor selected:(BOOL)selected;
+//- (void)setTitleFont:(UIFont *)titleFont selected:(BOOL)selected;
+//- (void)setTitleItmeBackgroundColor:(UIColor *)itemBackgroundColor;
 @end

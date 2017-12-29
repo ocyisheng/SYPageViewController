@@ -72,7 +72,8 @@
  @param parentViewController 父VC
  @param pageViewFrame SYPageViewController.view.frame
  */
-- (void)addToParentViewController:(UIViewController *)parentViewController frame:(CGRect)pageViewFrame;
+- (void)addToParentViewController:(UIViewController *)parentViewController
+                            frame:(CGRect)pageViewFrame;
 
 /**
  跳转上一页
@@ -99,8 +100,8 @@
 
  @param pageNumage 指定页面
  @param direction UIPageViewControllerNavigationDirection
- @param animation 是否动画
  */
-- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage direction:(UIPageViewControllerNavigationDirection)direction animation:(BOOL)animation;
+- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage
+                               direction:(UIPageViewControllerNavigationDirection)direction;
 
 @end
