@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */; };
 		5D6443481FE8E54F0024AD30 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443471FE8E54F0024AD30 /* main.m */; };
 		5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64434A1FE8E54F0024AD30 /* AppDelegate.m */; };
 		5D64434E1FE8E54F0024AD30 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64434D1FE8E54F0024AD30 /* ViewController.m */; };
@@ -16,10 +17,11 @@
 		5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64435E1FE8E5BC0024AD30 /* PageViewController.m */; };
 		5D6443641FE8E5BC0024AD30 /* PageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */; };
 		5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */; };
-		5D6443681FE8F8F50024AD30 /* SYTitleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D54BFC61FFB7ABB00732397 /* SYTitleSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleSegmentView.h; sourceTree = "<group>"; };
+		5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleSegmentView.m; sourceTree = "<group>"; };
 		5D6443431FE8E54F0024AD30 /* SYPageViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYPageViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6443471FE8E54F0024AD30 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D6443491FE8E54F0024AD30 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -35,8 +37,6 @@
 		5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageViewController.xib; sourceTree = "<group>"; };
 		5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPageViewController.m; sourceTree = "<group>"; };
 		5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPageViewController.h; sourceTree = "<group>"; };
-		5D6443661FE8F8F50024AD30 /* SYTitleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleScrollView.h; sourceTree = "<group>"; };
-		5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +99,8 @@
 			children = (
 				5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */,
 				5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */,
-				5D6443661FE8F8F50024AD30 /* SYTitleScrollView.h */,
-				5D6443671FE8F8F50024AD30 /* SYTitleScrollView.m */,
+				5D54BFC61FFB7ABB00732397 /* SYTitleSegmentView.h */,
+				5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */,
 			);
 			path = SYPageViewController;
 			sourceTree = "<group>";
@@ -136,6 +136,7 @@
 				TargetAttributes = {
 					5D6443421FE8E54F0024AD30 = {
 						CreatedOnToolsVersion = 8.3.1;
+						DevelopmentTeam = U4P7LSLG8M;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -180,8 +181,8 @@
 				5D64434E1FE8E54F0024AD30 /* ViewController.m in Sources */,
 				5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */,
 				5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */,
+				5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */,
 				5D6443481FE8E54F0024AD30 /* main.m in Sources */,
-				5D6443681FE8F8F50024AD30 /* SYTitleScrollView.m in Sources */,
 				5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -304,6 +305,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = U4P7LSLG8M;
 				INFOPLIST_FILE = SYPageViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = yang.SYPageViewController;
@@ -315,6 +317,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = U4P7LSLG8M;
 				INFOPLIST_FILE = SYPageViewController/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = yang.SYPageViewController;
@@ -341,6 +344,7 @@
 				5D64435C1FE8E54F0024AD30 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

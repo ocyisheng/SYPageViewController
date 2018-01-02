@@ -11,7 +11,7 @@
 #import "PageViewController.h"
 
 #import "SYPageViewController.h"
-#import "SYTitleScrollView.h"
+#import "SYTitleSegmentView.h"
 
 @interface MyStoryVC2 : UIViewController<SYPageViewControllerProtocol>
 @property (nonatomic,strong) UILabel *label;
@@ -20,7 +20,7 @@
 @end
 
 @interface ViewController ()<SYPageViewControllerDataSource,SYPageViewControllerDelegate>
-@property (nonatomic,strong) SYTitleScrollView *titleView;
+@property (nonatomic,strong) SYTitleSegmentView *titleView;
 @property (nonatomic,strong) SYPageViewController *pageViewController;
 @property (weak, nonatomic) IBOutlet UIButton *pushButton;
 @end
@@ -36,7 +36,7 @@
      self.automaticallyAdjustsScrollViewInsets = NO;
     
     [self.view addSubview:self.titleView];
-    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 34, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 34)];
+    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 44)];
       [self.pageViewController showViewControllerWithPageNumber:3 direction:UIPageViewControllerNavigationDirectionForward];
     
     [self.titleView setSelectedItemAtIndex:3 animation:NO];
@@ -45,9 +45,7 @@
         [ weakSelf.pageViewController showViewControllerWithPageNumber:selectedItemIndex direction:selectedItemIndex > weakSelf.pageViewController.visiableViewControllerCurrenPageNumber ? UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse];
     }];
     
-  
-    
-    
+
     [self.view bringSubviewToFront:self.pushButton];
 
 }
@@ -66,10 +64,17 @@
     
     [self.titleView setSelectedItemAtIndex:pageViewController.visiableViewControllerCurrenPageNumber animation:YES];
 }
-- (SYTitleScrollView *)titleView{
+- (SYTitleSegmentView *)titleView{
     if (!_titleView) {
-        _titleView = [[SYTitleScrollView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame),  CGRectGetWidth(self.view.bounds), 34)];
-        _titleView.titleItems = @[@"测试1",@"测试2",@"测试3",@"测试4测试4",@"测试5",@"测试6",@"测试7测试7",@"测试8",@"测试测试9",@"测试10",@"测试11",@"测试12",@"测试4测试13",@"测试14",@"测试16",@"测试7测试17",@"测试18",@"测试测试19",@"测试20"];
+        _titleView = [[SYTitleSegmentView alloc]initWithFrame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame),  CGRectGetWidth(self.view.bounds), 44)];
+        _titleView.titleItems = @[@"测试1",@"测试2",@"测试3",@"测试4",@"测试5",@"测试6测试6",@"测试7",@"测试8",@"测试测试9",@"测试10",@"测试11",@"测测试12",@"测试",@"测试14",@"测试16",@"测试7",@"测试18",@"测试19",@"测试20"];
+        _titleView.titleColor = [UIColor blackColor];
+        _titleView.titleFont = [UIFont systemFontOfSize:15];
+        _titleView.titleColorSelected = [UIColor redColor];
+        _titleView.titleFontSelected = [UIFont systemFontOfSize:16];
+        _titleView.titleItemMargin = 10.f;
+        _titleView.titleItemColor = [UIColor yellowColor];
+        
     }
     
    return  _titleView;
@@ -84,6 +89,9 @@
     }
     return _pageViewController;
 }
+@end
+@interface MyStoryVC2 ()<UITableViewDelegate,UITableViewDataSource>
+@property (nonatomic,strong) UITableView *tableView;
 @end
 @implementation MyStoryVC2
 
@@ -100,13 +108,28 @@
     
     [self.view addSubview:self.label];
     
+    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource =  self;
+    [self.view addSubview:self.tableView];
+    self.tableView.rowHeight = 60.f;
+    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 30;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
+    cell.backgroundColor = [UIColor orangeColor];
+    return cell;
+}
 
 - (IBAction)pushButton:(id)sender {
 }
