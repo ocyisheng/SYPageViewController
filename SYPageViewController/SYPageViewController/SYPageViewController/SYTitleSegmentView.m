@@ -20,7 +20,7 @@
 @interface SYTitleSegmentView ()<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
 @property (nonatomic,strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic,strong) UICollectionView *contentCollectionView;
-@property (nonatomic,strong) NSMutableSet<SYCollectionViewItem *> *allResumeItems;
+@property (nonatomic,strong) NSMutableSet<SYCollectionViewItem *> *allResumeItems;//储存所有的item
 @property (nonatomic,strong) NSIndexPath *currentSelectedIndexPath;
 
 @end

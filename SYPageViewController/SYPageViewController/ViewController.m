@@ -92,11 +92,19 @@
 @end
 @interface MyStoryVC2 ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UITableView *tableView;
+@property (nonatomic,strong) NSArray *dataSource;
 @end
 @implementation MyStoryVC2
 
 - (void)viewDidLoad{
     [super viewDidLoad];
+    
+    
+    
+    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView.delegate = self;
+    self.tableView.dataSource =  self;
+    [self.view addSubview:self.tableView];
     
     self.label = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, CGRectGetWidth(self.view.bounds), 44)];
     
@@ -107,14 +115,13 @@
     self.label.textAlignment = NSTextAlignmentCenter;
     
     [self.view addSubview:self.label];
-    
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    self.tableView.delegate = self;
-    self.tableView.dataSource =  self;
-    [self.view addSubview:self.tableView];
-    self.tableView.rowHeight = 60.f;
-    [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:NSStringFromClass([UITableViewCell class])];
-    
+    self.tableView.estimatedRowHeight = 100;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.dataSource = @[@"1",@"3",@"2",@"2",@"4",@"4",@"4",@"1",@"1",@"1",@"1",@"5",@"2",@"2",@"2",@"2",@"2",@"3",@"3",@"5",@"5",@"5",@"5",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"1",@"3",@"2",@"2",@"3",@"1",@"4",@"4",@"4",@"4",@"5",@"1",@"2",@"2",@"2"];
+    for (int i = 1; i < 6; i ++) {
+        NSString *className = [NSString stringWithFormat:@"TableViewCell%d",i];
+        [self.tableView registerNib:[UINib nibWithNibName:className bundle:nil] forCellReuseIdentifier:className];
+    }
     
 }
 
@@ -123,14 +130,16 @@
     // Dispose of any resources that can be recreated.
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 30;
+    return self.dataSource.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:NSStringFromClass([UITableViewCell class]) forIndexPath:indexPath];
-    cell.backgroundColor = [UIColor orangeColor];
+    NSString *number = self.dataSource[indexPath.row];
+    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:[NSString stringWithFormat:@"TableViewCell%@",number] forIndexPath:indexPath];//
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+}
 - (IBAction)pushButton:(id)sender {
 }
 @end

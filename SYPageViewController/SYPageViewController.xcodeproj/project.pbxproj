@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D5316592005FED400E7143B /* TableViewCell1.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5316572005FED400E7143B /* TableViewCell1.m */; };
+		5D53165A2005FED400E7143B /* TableViewCell1.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5316582005FED400E7143B /* TableViewCell1.xib */; };
+		5D53165E2005FEE200E7143B /* TableViewCell2.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D53165C2005FEE200E7143B /* TableViewCell2.m */; };
+		5D53165F2005FEE200E7143B /* TableViewCell2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D53165D2005FEE200E7143B /* TableViewCell2.xib */; };
+		5D5316632005FEF200E7143B /* TableViewCell3.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5316612005FEF200E7143B /* TableViewCell3.m */; };
+		5D5316642005FEF200E7143B /* TableViewCell3.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5316622005FEF200E7143B /* TableViewCell3.xib */; };
+		5D5316682005FEFD00E7143B /* TableViewCell4.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5316662005FEFD00E7143B /* TableViewCell4.m */; };
+		5D5316692005FEFD00E7143B /* TableViewCell4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5316672005FEFD00E7143B /* TableViewCell4.xib */; };
+		5D53166D2005FF0700E7143B /* TableViewCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D53166B2005FF0700E7143B /* TableViewCell5.m */; };
+		5D53166E2005FF0700E7143B /* TableViewCell5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D53166C2005FF0700E7143B /* TableViewCell5.xib */; };
 		5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */; };
 		5D6443481FE8E54F0024AD30 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443471FE8E54F0024AD30 /* main.m */; };
 		5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64434A1FE8E54F0024AD30 /* AppDelegate.m */; };
@@ -20,6 +30,21 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D5316562005FED400E7143B /* TableViewCell1.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell1.h; sourceTree = "<group>"; };
+		5D5316572005FED400E7143B /* TableViewCell1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell1.m; sourceTree = "<group>"; };
+		5D5316582005FED400E7143B /* TableViewCell1.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell1.xib; sourceTree = "<group>"; };
+		5D53165B2005FEE200E7143B /* TableViewCell2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell2.h; sourceTree = "<group>"; };
+		5D53165C2005FEE200E7143B /* TableViewCell2.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell2.m; sourceTree = "<group>"; };
+		5D53165D2005FEE200E7143B /* TableViewCell2.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell2.xib; sourceTree = "<group>"; };
+		5D5316602005FEF200E7143B /* TableViewCell3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell3.h; sourceTree = "<group>"; };
+		5D5316612005FEF200E7143B /* TableViewCell3.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell3.m; sourceTree = "<group>"; };
+		5D5316622005FEF200E7143B /* TableViewCell3.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell3.xib; sourceTree = "<group>"; };
+		5D5316652005FEFD00E7143B /* TableViewCell4.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell4.h; sourceTree = "<group>"; };
+		5D5316662005FEFD00E7143B /* TableViewCell4.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell4.m; sourceTree = "<group>"; };
+		5D5316672005FEFD00E7143B /* TableViewCell4.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell4.xib; sourceTree = "<group>"; };
+		5D53166A2005FF0700E7143B /* TableViewCell5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell5.h; sourceTree = "<group>"; };
+		5D53166B2005FF0700E7143B /* TableViewCell5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell5.m; sourceTree = "<group>"; };
+		5D53166C2005FF0700E7143B /* TableViewCell5.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell5.xib; sourceTree = "<group>"; };
 		5D54BFC61FFB7ABB00732397 /* SYTitleSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleSegmentView.h; sourceTree = "<group>"; };
 		5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleSegmentView.m; sourceTree = "<group>"; };
 		5D6443431FE8E54F0024AD30 /* SYPageViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYPageViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +102,21 @@
 				5D64434A1FE8E54F0024AD30 /* AppDelegate.m */,
 				5D64434C1FE8E54F0024AD30 /* ViewController.h */,
 				5D64434D1FE8E54F0024AD30 /* ViewController.m */,
+				5D5316562005FED400E7143B /* TableViewCell1.h */,
+				5D5316572005FED400E7143B /* TableViewCell1.m */,
+				5D5316582005FED400E7143B /* TableViewCell1.xib */,
+				5D53165B2005FEE200E7143B /* TableViewCell2.h */,
+				5D53165C2005FEE200E7143B /* TableViewCell2.m */,
+				5D53165D2005FEE200E7143B /* TableViewCell2.xib */,
+				5D5316602005FEF200E7143B /* TableViewCell3.h */,
+				5D5316612005FEF200E7143B /* TableViewCell3.m */,
+				5D5316622005FEF200E7143B /* TableViewCell3.xib */,
+				5D5316652005FEFD00E7143B /* TableViewCell4.h */,
+				5D5316662005FEFD00E7143B /* TableViewCell4.m */,
+				5D5316672005FEFD00E7143B /* TableViewCell4.xib */,
+				5D53166A2005FF0700E7143B /* TableViewCell5.h */,
+				5D53166B2005FF0700E7143B /* TableViewCell5.m */,
+				5D53166C2005FF0700E7143B /* TableViewCell5.xib */,
 				5D64434F1FE8E54F0024AD30 /* Main.storyboard */,
 				5D6443521FE8E54F0024AD30 /* Assets.xcassets */,
 				5D6443541FE8E54F0024AD30 /* LaunchScreen.storyboard */,
@@ -164,10 +204,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D53165A2005FED400E7143B /* TableViewCell1.xib in Resources */,
+				5D53166E2005FF0700E7143B /* TableViewCell5.xib in Resources */,
 				5D6443561FE8E54F0024AD30 /* LaunchScreen.storyboard in Resources */,
+				5D5316692005FEFD00E7143B /* TableViewCell4.xib in Resources */,
 				5D6443531FE8E54F0024AD30 /* Assets.xcassets in Resources */,
 				5D6443511FE8E54F0024AD30 /* Main.storyboard in Resources */,
+				5D53165F2005FEE200E7143B /* TableViewCell2.xib in Resources */,
 				5D6443641FE8E5BC0024AD30 /* PageViewController.xib in Resources */,
+				5D5316642005FEF200E7143B /* TableViewCell3.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,9 +223,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D53165E2005FEE200E7143B /* TableViewCell2.m in Sources */,
 				5D64434E1FE8E54F0024AD30 /* ViewController.m in Sources */,
+				5D53166D2005FF0700E7143B /* TableViewCell5.m in Sources */,
 				5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */,
 				5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */,
+				5D5316632005FEF200E7143B /* TableViewCell3.m in Sources */,
+				5D5316592005FED400E7143B /* TableViewCell1.m in Sources */,
+				5D5316682005FEFD00E7143B /* TableViewCell4.m in Sources */,
 				5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */,
 				5D6443481FE8E54F0024AD30 /* main.m in Sources */,
 				5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */,
