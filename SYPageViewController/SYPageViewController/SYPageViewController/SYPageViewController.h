@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+
 @class SYPageViewController;
-@protocol SYPageViewControllerProtocol <NSObject>
+
+@protocol SYPageViewControllerContentViewControllerProtocol;
+@protocol SYPageViewControllerContentViewControllerProtocol <NSObject>
 @required
 @property (nonatomic,assign) NSUInteger currenPageNumber;
 @end
@@ -16,13 +19,31 @@
 @protocol SYPageViewControllerDataSource <NSObject>
 @required
 
+
 /**
  visiableVC加载完毕；可以在这里更新VC的内容
-
- @param visiableViewController 遵守SYPageViewControllerProtocol协议的VC
+ 
+ @param visiableViewController 遵守SYPageViewControllerContentViewControllerProtocol协议的VC
  @return visiableViewController
  */
-- (UIViewController<SYPageViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerProtocol> *)visiableViewController;
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerContentViewControllerProtocol> *)visiableViewController;
+
+/**
+ 返回对应pageNumber的VC，切记在这里给vc的currentPageNumber赋值
+ 
+ @param pageNumber currentPageNumber
+ @return visiableViewController
+ */
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)willDisplayVisiableViewControllerWithPageNumber:(NSUInteger)pageNumber;
+
+/**
+最大vc的个数
+
+ @return NSUInteger
+ */
+- (NSUInteger)maxPageCount;
+@optional
+
 
 @end
 
@@ -34,7 +55,7 @@
 
 @end
 @interface SYPageViewController : NSObject
-@property (nonatomic,strong,readonly) UIViewController<SYPageViewControllerProtocol> *visiableViewController;
+@property (nonatomic,strong,readonly) UIViewController<SYPageViewControllerContentViewControllerProtocol> *visiableViewController;
 @property (nonatomic,assign,readonly) NSUInteger visiableViewControllerCurrenPageNumber;
 @property (nonatomic,strong,readonly) UIScrollView *contentScrollView;
 @property (nonatomic,weak) id<SYPageViewControllerDataSource> dataSource;
@@ -42,34 +63,31 @@
 
 /**
  初始化 SYPageViewController；默认水平滚动，书脊宽为8.f
-
- @param vcClass 遵循SYPageViewControllerProtocol协议，需要展示的VCName
+ 
  @return self
  */
-- (instancetype)initWithConformsProtocolViewControllerClass:(Class )vcClass;
+- (instancetype)init;
 
 /**
  初始化 SYPageViewController
-
- @param vcClass 遵循SYPageViewControllerProtocol协议，需要展示的VC
+ 
  @param orientation 滚动方向
  @param pageSpacing 书脊宽度
  @return self
  */
-- (instancetype)initWithConformsProtocolViewControllerClass:(Class )vcClass
-                                 navigationOrientation:(UIPageViewControllerNavigationOrientation)orientation
-                                           pageSpacing:(CGFloat)pageSpacing;
+- (instancetype)initWithNavigationOrientation:(UIPageViewControllerNavigationOrientation)orientation
+                                  pageSpacing:(CGFloat)pageSpacing;
 
 /**
  将SYPageViewController添加到父VC上,默认frame与父VC的bounds相等
-
+ 
  @param parentViewController 父VC
  */
 - (void)addToParentViewController:(UIViewController *)parentViewController;
 
 /**
  将SYPageViewController添加到父VC上
-
+ 
  @param parentViewController 父VC
  @param pageViewFrame SYPageViewController.view.frame
  */
@@ -77,31 +95,27 @@
                             frame:(CGRect)pageViewFrame;
 
 /**
- 跳转上一页
+ 跳转上一页;
  */
 - (void)showLastVisiableViewController;
 
 
 /**
- 跳转下一页面
+ 跳转下一页面；
  */
 - (void)showNextVisiableViewController;
 
 
 /**
- 设置最大页码数;
-
- @param maxPages 默认是NSUIntegerMax
- */
-- (void)setMaxPages:(NSUInteger)maxPages;
-
-/**
- 跳转指定页面;默认显示第一个页面
+ 跳转指定页面;
  
- @param pageNumage 指定页面
+ @param pageNumber 指定页面
  @param direction UIPageViewControllerNavigationDirection
+ @param animation 是否动画；
  */
-- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumage
-                               direction:(UIPageViewControllerNavigationDirection)direction;
+- (void)showViewControllerWithPageNumber:(NSUInteger)pageNumber
+                               direction:(UIPageViewControllerNavigationDirection)direction
+                               animation:(BOOL)animation;
 
 @end
+

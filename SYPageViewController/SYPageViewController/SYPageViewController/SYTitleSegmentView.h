@@ -8,8 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SYTitleSegmentViewDataSource <NSObject>
+@required
+- (NSUInteger)numberOfTitles;
+- (NSString *)titleForSegmentViewAtIndex:(NSUInteger)index;
+@optional
+- (void)titleSegmentViewDidSelectedAnIndex:(NSUInteger)index;
+@end
 @interface SYTitleSegmentView : UIView
-
+@property (nonatomic,weak) id<SYTitleSegmentViewDataSource> dataSource;
 ///标题数组
 @property (nonatomic,strong) NSArray<NSString *> *titleItems;
 ///选中的回调

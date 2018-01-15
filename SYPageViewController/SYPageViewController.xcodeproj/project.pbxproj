@@ -17,16 +17,16 @@
 		5D5316692005FEFD00E7143B /* TableViewCell4.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D5316672005FEFD00E7143B /* TableViewCell4.xib */; };
 		5D53166D2005FF0700E7143B /* TableViewCell5.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D53166B2005FF0700E7143B /* TableViewCell5.m */; };
 		5D53166E2005FF0700E7143B /* TableViewCell5.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D53166C2005FF0700E7143B /* TableViewCell5.xib */; };
-		5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */; };
 		5D6443481FE8E54F0024AD30 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443471FE8E54F0024AD30 /* main.m */; };
 		5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64434A1FE8E54F0024AD30 /* AppDelegate.m */; };
 		5D64434E1FE8E54F0024AD30 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64434D1FE8E54F0024AD30 /* ViewController.m */; };
 		5D6443511FE8E54F0024AD30 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D64434F1FE8E54F0024AD30 /* Main.storyboard */; };
 		5D6443531FE8E54F0024AD30 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D6443521FE8E54F0024AD30 /* Assets.xcassets */; };
 		5D6443561FE8E54F0024AD30 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5D6443541FE8E54F0024AD30 /* LaunchScreen.storyboard */; };
-		5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D64435E1FE8E5BC0024AD30 /* PageViewController.m */; };
-		5D6443641FE8E5BC0024AD30 /* PageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */; };
 		5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */; };
+		5DB91E1A200C564600B898B9 /* SYTitleSegmentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB91E18200C564600B898B9 /* SYTitleSegmentView.m */; };
+		5DB91E1D200C572700B898B9 /* SYNewsPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB91E1C200C572700B898B9 /* SYNewsPageViewController.m */; };
+		5DB91E20200C9E0300B898B9 /* NewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB91E1F200C9E0300B898B9 /* NewsViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,8 +45,6 @@
 		5D53166A2005FF0700E7143B /* TableViewCell5.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewCell5.h; sourceTree = "<group>"; };
 		5D53166B2005FF0700E7143B /* TableViewCell5.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewCell5.m; sourceTree = "<group>"; };
 		5D53166C2005FF0700E7143B /* TableViewCell5.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell5.xib; sourceTree = "<group>"; };
-		5D54BFC61FFB7ABB00732397 /* SYTitleSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleSegmentView.h; sourceTree = "<group>"; };
-		5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleSegmentView.m; sourceTree = "<group>"; };
 		5D6443431FE8E54F0024AD30 /* SYPageViewController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SYPageViewController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D6443471FE8E54F0024AD30 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5D6443491FE8E54F0024AD30 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -57,11 +55,14 @@
 		5D6443521FE8E54F0024AD30 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5D6443551FE8E54F0024AD30 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5D6443571FE8E54F0024AD30 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5D64435D1FE8E5BC0024AD30 /* PageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
-		5D64435E1FE8E5BC0024AD30 /* PageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
-		5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PageViewController.xib; sourceTree = "<group>"; };
 		5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYPageViewController.m; sourceTree = "<group>"; };
 		5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYPageViewController.h; sourceTree = "<group>"; };
+		5DB91E18200C564600B898B9 /* SYTitleSegmentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYTitleSegmentView.m; sourceTree = "<group>"; };
+		5DB91E19200C564600B898B9 /* SYTitleSegmentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYTitleSegmentView.h; sourceTree = "<group>"; };
+		5DB91E1B200C572700B898B9 /* SYNewsPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYNewsPageViewController.h; sourceTree = "<group>"; };
+		5DB91E1C200C572700B898B9 /* SYNewsPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYNewsPageViewController.m; sourceTree = "<group>"; };
+		5DB91E1E200C9E0300B898B9 /* NewsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NewsViewController.h; sourceTree = "<group>"; };
+		5DB91E1F200C9E0300B898B9 /* NewsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NewsViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,11 +96,10 @@
 			isa = PBXGroup;
 			children = (
 				5D6443601FE8E5BC0024AD30 /* SYPageViewController */,
-				5D64435D1FE8E5BC0024AD30 /* PageViewController.h */,
-				5D64435E1FE8E5BC0024AD30 /* PageViewController.m */,
-				5D64435F1FE8E5BC0024AD30 /* PageViewController.xib */,
 				5D6443491FE8E54F0024AD30 /* AppDelegate.h */,
 				5D64434A1FE8E54F0024AD30 /* AppDelegate.m */,
+				5DB91E1E200C9E0300B898B9 /* NewsViewController.h */,
+				5DB91E1F200C9E0300B898B9 /* NewsViewController.m */,
 				5D64434C1FE8E54F0024AD30 /* ViewController.h */,
 				5D64434D1FE8E54F0024AD30 /* ViewController.m */,
 				5D5316562005FED400E7143B /* TableViewCell1.h */,
@@ -139,8 +139,10 @@
 			children = (
 				5D6443621FE8E5BC0024AD30 /* SYPageViewController.h */,
 				5D6443611FE8E5BC0024AD30 /* SYPageViewController.m */,
-				5D54BFC61FFB7ABB00732397 /* SYTitleSegmentView.h */,
-				5D54BFC71FFB7ABB00732397 /* SYTitleSegmentView.m */,
+				5DB91E19200C564600B898B9 /* SYTitleSegmentView.h */,
+				5DB91E18200C564600B898B9 /* SYTitleSegmentView.m */,
+				5DB91E1B200C572700B898B9 /* SYNewsPageViewController.h */,
+				5DB91E1C200C572700B898B9 /* SYNewsPageViewController.m */,
 			);
 			path = SYPageViewController;
 			sourceTree = "<group>";
@@ -211,7 +213,6 @@
 				5D6443531FE8E54F0024AD30 /* Assets.xcassets in Resources */,
 				5D6443511FE8E54F0024AD30 /* Main.storyboard in Resources */,
 				5D53165F2005FEE200E7143B /* TableViewCell2.xib in Resources */,
-				5D6443641FE8E5BC0024AD30 /* PageViewController.xib in Resources */,
 				5D5316642005FEF200E7143B /* TableViewCell3.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -226,14 +227,15 @@
 				5D53165E2005FEE200E7143B /* TableViewCell2.m in Sources */,
 				5D64434E1FE8E54F0024AD30 /* ViewController.m in Sources */,
 				5D53166D2005FF0700E7143B /* TableViewCell5.m in Sources */,
+				5DB91E20200C9E0300B898B9 /* NewsViewController.m in Sources */,
 				5D64434B1FE8E54F0024AD30 /* AppDelegate.m in Sources */,
 				5D6443651FE8E5BC0024AD30 /* SYPageViewController.m in Sources */,
 				5D5316632005FEF200E7143B /* TableViewCell3.m in Sources */,
 				5D5316592005FED400E7143B /* TableViewCell1.m in Sources */,
+				5DB91E1A200C564600B898B9 /* SYTitleSegmentView.m in Sources */,
+				5DB91E1D200C572700B898B9 /* SYNewsPageViewController.m in Sources */,
 				5D5316682005FEFD00E7143B /* TableViewCell4.m in Sources */,
-				5D54BFC81FFB7ABB00732397 /* SYTitleSegmentView.m in Sources */,
 				5D6443481FE8E54F0024AD30 /* main.m in Sources */,
-				5D6443631FE8E5BC0024AD30 /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

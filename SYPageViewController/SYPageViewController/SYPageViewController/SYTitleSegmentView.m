@@ -81,7 +81,7 @@
 }
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSString * title = self.titleItems[indexPath.row];
+    NSString * title = self.titleItems ? self.titleItems[indexPath.row] : [self.dataSource titleForSegmentViewAtIndex:indexPath.row];;
     CGFloat width = [title sizeWithAttributes:@{NSFontAttributeName:self.titleFontSelected}].width;
     return CGSizeMake(width, CGRectGetHeight(self.bounds));
 }
@@ -91,14 +91,17 @@
     if (self.didSelectedItemBlock) {
         self.didSelectedItemBlock(indexPath.row);
     }
+    if (self.dataSource &&[self.dataSource respondsToSelector:@selector(titleSegmentViewDidSelectedAnIndex:)]) {
+        [self.dataSource titleSegmentViewDidSelectedAnIndex:indexPath.row];
+    }
 }
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return self.titleItems.count;
+    return self.titleItems ? self.titleItems.count : [self.dataSource numberOfTitles];
 }
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     SYCollectionViewItem *item = [self.contentCollectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([SYCollectionViewItem class]) forIndexPath:indexPath];
-    [item setTitle:self.titleItems[indexPath.row]
+    [item setTitle:(self.titleItems ? self.titleItems[indexPath.row] : [self.dataSource titleForSegmentViewAtIndex:indexPath.row])
         titleColor:self.titleColor selectedTitleColor:self.titleColorSelected
          titleFont:self.titleFont selectedTitleFont:self.titleFontSelected];
     indexPath == self.currentSelectedIndexPath ? [item hiddenSelectTitleLable:NO] :[item hiddenSelectTitleLable:YES];
@@ -127,7 +130,6 @@
         _flowLayout.minimumLineSpacing = 0.f;
         _flowLayout.minimumInteritemSpacing = _titleItemMargin;
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-        
     }
     return _flowLayout;
 }
