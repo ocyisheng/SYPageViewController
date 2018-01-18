@@ -13,59 +13,37 @@
 @interface SYNewsPageViewController ()<SYPageViewControllerDataSource,SYPageViewControllerDelegate,SYTitleSegmentViewDataSource>
 @property (nonatomic,strong) SYTitleSegmentView *titleView;
 @property (nonatomic,strong) SYPageViewController *pageViewController;
-@property (nonatomic,strong) NSMutableDictionary<NSString *,NSDictionary<NSNumber *,UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *>*> *contentViewControllerDic;
 @end
 
 @implementation SYNewsPageViewController
-
+- (void)dealloc{
+    self.titleView.dataSource = nil;
+    self.pageViewController.dataSource = nil;
+    self.pageViewController.delegate = nil;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:self.titleView];
     
-    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.navigationController.navigationBar.frame) - 44)];
-    [self.pageViewController showViewControllerWithPageNumber:3 direction:UIPageViewControllerNavigationDirectionForward animation:NO];
+    [self.pageViewController addToParentViewController:self frame:CGRectMake(0, CGRectGetMaxY(self.navigationController.navigationBar.frame) + 44, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) -  CGRectGetMaxY(self.navigationController.navigationBar.frame) - 44 - CGRectGetHeight(self.tabBarController.tabBar.frame) )];
     
-    [self.titleView setSelectedItemAtIndex:3 animation:NO];
+    [self.pageViewController showViewControllerWithPageNumber:0 direction:UIPageViewControllerNavigationDirectionForward animation:NO];
     
+    [self.titleView setSelectedItemAtIndex:0 animation:NO];
+
 }
-- (UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forIndex:(NSUInteger)index{
-    
-   NSDictionary <NSNumber *,UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *> *  reusVCs = [self.contentViewControllerDic objectForKey:className];
-    __block  UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *reusVC = nil;
-    //查找可用vc
-    [reusVCs enumerateKeysAndObjectsUsingBlock:^(NSNumber * _Nonnull key, UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> * _Nonnull obj, BOOL * _Nonnull stop) {
-        if (obj.isReusable == YES) {
-            if (obj != self.pageViewController.visiableViewController) {
-                reusVC = obj;
-                *stop = YES;
-            }
-        }else{
-            if (key.unsignedIntegerValue == index) {
-                reusVC = obj;
-                 *stop = YES;
-            }
-        }
-    }];
-    if (reusVC == nil)
-    {
-        //没有找到可复用的该ClassName的VC,创建一个并保存
-        reusVC = [[[NSClassFromString(className) class] alloc]init];
-        NSMutableDictionary <NSNumber *,UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *> * vcs = reusVCs == nil ? [NSMutableDictionary dictionary] : [reusVCs mutableCopy];
-        [vcs setObject:reusVC forKey:@(index)];
-        [self.contentViewControllerDic setObject:[vcs copy] forKey:className];
-    }
-    reusVC.currenPageNumber = index;
-    return reusVC;
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber{
+    return   [self.pageViewController dequeueReusableContentViewControllerWithClassName:className forPageNumber:pageNumber];
 }
 
 #pragma mark - SYPageViewControllerDataSource
 - (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerContentViewControllerProtocol> *)visiableViewController{
-    visiableViewController.view.backgroundColor = [UIColor whiteColor];
     return visiableViewController;
 }
 - (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)willDisplayVisiableViewControllerWithPageNumber:(NSUInteger)pageNumber{
+    
     return [self.dataSource willDisplayContentViewControllerAtIndex:pageNumber];
 }
 - (NSUInteger)maxPageCount{
@@ -102,12 +80,6 @@
         _titleView.titleItemColor = [UIColor yellowColor];
     }
     return  _titleView;
-}
-- (NSMutableDictionary<NSString *,NSDictionary<NSNumber *,UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *>*> *)contentViewControllerDic{
-    if (_contentViewControllerDic == nil) {
-        _contentViewControllerDic = [NSMutableDictionary dictionary];
-    }
-    return _contentViewControllerDic;
 }
 - (SYPageViewController *)pageViewController{
     if (_pageViewController == nil) {

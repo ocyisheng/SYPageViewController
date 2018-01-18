@@ -7,24 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "SYPageViewController.h"
-
-@protocol SYNewsPageViewControllerContentViewControllerProtocol <SYPageViewControllerContentViewControllerProtocol>
-@required
-@property (nonatomic,assign,readonly) BOOL isReusable;
-@optional
-@end
 
 @protocol SYNewsPageViewControllerDataSource <NSObject>
 @required
 - (NSUInteger)numberOfTitles;
 - (NSString *)titleForSegmentViewAtIndex:(NSUInteger)index;
-- (UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *)willDisplayContentViewControllerAtIndex:(NSUInteger)index;
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)willDisplayContentViewControllerAtIndex:(NSUInteger)index ;
 
 @end
 
 @interface SYNewsPageViewController : UIViewController
 @property (nonatomic,weak) id<SYNewsPageViewControllerDataSource> dataSource;
-- (UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forIndex:(NSUInteger)index;
+
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber;
 @end

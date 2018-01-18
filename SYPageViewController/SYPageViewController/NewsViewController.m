@@ -15,7 +15,7 @@
 #import "TableViewCell4.h"
 #import "TableViewCell5.h"
 
-@interface MyStoryVC5 : UIViewController<SYNewsPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
+@interface MyStoryVC5 : UIViewController<SYPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,assign) NSUInteger currenPageNumber;
 @property (nonatomic,strong) UITableView *tableView;
@@ -23,14 +23,14 @@
 
 @end
 
-@interface MyStoryVC6 : UIViewController<SYNewsPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
+@interface MyStoryVC6 : UIViewController<SYPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,assign) NSUInteger currenPageNumber;
 @property (nonatomic,strong) UITableView *tableView;
 @property (nonatomic,strong) NSArray *dataSource;
 
 @end
-@interface MyStoryVC7 : UIViewController<SYNewsPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
+@interface MyStoryVC7 : UIViewController<SYPageViewControllerContentViewControllerProtocol,UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong) UILabel *label;
 @property (nonatomic,assign) NSUInteger currenPageNumber;
 @property (nonatomic,strong) UITableView *tableView;
@@ -54,9 +54,9 @@
     self.newsPageVC = [[SYNewsPageViewController alloc]init];
     self.newsPageVC.dataSource = self;
     
-    self.dataSource = @[@"5",@"5",@"5",@"5",@"6",@"7",@"5",@"7",@"7",@"7",@"7",@"6",@"6",@"6",@"6",@"5",@"6",@"7",@"5",@"7"];
+    self.dataSource = @[@"5",@"5",@"5",@"5",@"6",@"6",@"5",@"7",@"7",@"5",@"5",@"6",@"6",@"6",@"6",@"7",@"6",@"7",@"5",@"7",@"6"];
     
-     self.titles = @[@"测试1",@"测试2",@"测试3",@"测试4",@"测试5",@"测试6测试6",@"测试7",@"测试8",@"测试测试9",@"测试10",@"测试11",@"测测试12",@"测试",@"测试14",@"测试16",@"测试7",@"测试18",@"测试19",@"测试20"];
+     self.titles = @[@"测试1",@"测试2",@"测试3",@"测试4",@"测试5",@"测试6测试6",@"测试7",@"测试8",@"测试测试9",@"测试10",@"测试11",@"测测试12",@"测试13",@"测试14",@"测试15",@"测试16",@"测试17",@"测试18",@"测试19",@"测试20"];
     [self addChildViewController:self.newsPageVC];
     
     [self.view addSubview:self.newsPageVC.view];
@@ -68,9 +68,8 @@
 - (NSString *)titleForSegmentViewAtIndex:(NSUInteger)index{
     return self.titles[index];
 }
-- (UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *)willDisplayContentViewControllerAtIndex:(NSUInteger)index{
-    
-    UIViewController<SYNewsPageViewControllerContentViewControllerProtocol> *vc5 = [self.newsPageVC dequeueReusableContentViewControllerWithClassName:[NSString stringWithFormat:@"MyStoryVC%@",self.dataSource[index]] forIndex:index];
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)willDisplayContentViewControllerAtIndex:(NSUInteger)index{
+  UIViewController<SYPageViewControllerContentViewControllerProtocol> *vc5 =  [self.newsPageVC dequeueReusableContentViewControllerWithClassName:[NSString stringWithFormat:@"MyStoryVC%@",self.dataSource[index]] forPageNumber:index];
     return vc5;
 }
 @end
@@ -79,7 +78,7 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds style:UITableViewStylePlain];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.delegate = self;
     self.tableView.dataSource =  self;
     [self.view addSubview:self.tableView];
@@ -103,6 +102,10 @@
 }
 - (BOOL)isReusable{
     return NO;
+}
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataSource.count;
@@ -146,10 +149,14 @@
     }
 }
 - (BOOL)isReusable{
-    return YES;
+    return NO;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataSource.count;
+}
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     NSString *number = self.dataSource[indexPath.row];
@@ -189,7 +196,11 @@
     }
 }
 - (BOOL)isReusable{
-    return YES;
+    return NO;
+}
+- (void)viewWillLayoutSubviews{
+    [super viewWillLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     return self.dataSource.count;

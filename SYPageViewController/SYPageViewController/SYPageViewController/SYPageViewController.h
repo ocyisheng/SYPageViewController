@@ -10,16 +10,16 @@
 
 @class SYPageViewController;
 
-@protocol SYPageViewControllerContentViewControllerProtocol;
 @protocol SYPageViewControllerContentViewControllerProtocol <NSObject>
 @required
+//当前的位置 
 @property (nonatomic,assign) NSUInteger currenPageNumber;
+///是否可复用
+@property (nonatomic,assign,readonly) BOOL isReusable;
 @end
 
 @protocol SYPageViewControllerDataSource <NSObject>
 @required
-
-
 /**
  visiableVC加载完毕；可以在这里更新VC的内容
  
@@ -29,7 +29,7 @@
 - (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)didDisplayVisiableViewController:(UIViewController<SYPageViewControllerContentViewControllerProtocol> *)visiableViewController;
 
 /**
- 返回对应pageNumber的VC，切记在这里给vc的currentPageNumber赋值
+ 返回对应pageNumber的VC；切记在这里给vc的currentPageNumber赋值
  
  @param pageNumber currentPageNumber
  @return visiableViewController
@@ -44,7 +44,6 @@
 - (NSUInteger)maxPageCount;
 @optional
 
-
 @end
 
 @protocol SYPageViewControllerDelegate <NSObject>
@@ -58,6 +57,8 @@
 @property (nonatomic,strong,readonly) UIViewController<SYPageViewControllerContentViewControllerProtocol> *visiableViewController;
 @property (nonatomic,assign,readonly) NSUInteger visiableViewControllerCurrenPageNumber;
 @property (nonatomic,strong,readonly) UIScrollView *contentScrollView;
+///当前VC是否可重复刷新，默认是NO；YES时回调didDisplayVisiableViewController代理方法
+@property (nonatomic,assign) BOOL redisplayCurrentPage;
 @property (nonatomic,weak) id<SYPageViewControllerDataSource> dataSource;
 @property (nonatomic,weak) id<SYPageViewControllerDelegate> delegate;
 
@@ -116,6 +117,16 @@
 - (void)showViewControllerWithPageNumber:(NSUInteger)pageNumber
                                direction:(UIPageViewControllerNavigationDirection)direction
                                animation:(BOOL)animation;
+
+
+/**
+ 从复用池中去一个可用的VC
+
+ @param className vc的类名
+ @param pageNumber 位置
+ @return 可用的VC
+ */
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber;
 
 @end
 
