@@ -14,6 +14,7 @@
 @required
 //当前的位置 
 @property (nonatomic,assign) NSUInteger currenPageNumber;
+@optional
 ///是否可复用
 @property (nonatomic,assign,readonly) BOOL isReusable;
 @end
@@ -127,6 +128,15 @@
  @return 可用的VC
  */
 - (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber;
+
+/**
+ 直接取出一个可用VC
+
+ @param className vc的类名
+ @param pageNumber pageNumber description位置
+ @return 可用的VC
+ */
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber;
 
 @end
 

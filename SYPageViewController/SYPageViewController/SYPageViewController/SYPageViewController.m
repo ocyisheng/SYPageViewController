@@ -14,10 +14,9 @@
 @property (nonatomic,assign) CGFloat pageSpacing;
 @property (nonatomic,strong) UIScrollView *contentScrollView;
 @property (nonatomic,assign) CGPoint contentOffset;
-
-
-@property (nonatomic,assign) NSUInteger currentIndex;
 @property (nonatomic,strong) NSMutableDictionary<NSString *,NSDictionary<NSNumber *,UIViewController<SYPageViewControllerContentViewControllerProtocol> *>*> *contentViewControllerDic;
+
+@property (nonatomic,strong) NSMutableDictionary<NSNumber *,UIViewController<SYPageViewControllerContentViewControllerProtocol> *> *contentVCDic;
 @end
 
 @implementation SYPageViewController
@@ -67,18 +66,14 @@
     if (pageNumber > [self.dataSource maxPageCount] - 1) {
         return;
     }
-    self.currentIndex = pageNumber;
     UIViewController<SYPageViewControllerContentViewControllerProtocol> * nextVC = [self.dataSource willDisplayVisiableViewControllerWithPageNumber:pageNumber];
     nextVC.currenPageNumber = pageNumber;
     UIPageViewControllerNavigationDirection navDirection = UIPageViewControllerNavigationDirectionForward;
     if (self.visiableViewController) {
-        if (self.visiableViewController.currenPageNumber == pageNumber && _redisplayCurrentPage == YES) {
-            //如果是同一个不进行操作
-            [self.dataSource didDisplayVisiableViewController:self.visiableViewController];
+        if (self.visiableViewController.currenPageNumber == pageNumber && _redisplayCurrentPage == NO) {
             return;
         }
         navDirection = (self.visiableViewController.currenPageNumber > pageNumber) ? UIPageViewControllerNavigationDirectionReverse : UIPageViewControllerNavigationDirectionForward;
-        
     }
     __weak typeof(self) weakSelf = self;
     [self.pageViewController setViewControllers:@[nextVC] direction:navDirection animated:animation completion:^(BOOL finished) {
@@ -92,6 +87,19 @@
 - (NSUInteger)visiableViewControllerCurrenPageNumber{
     UIViewController<SYPageViewControllerContentViewControllerProtocol> *vc  = self.pageViewController.viewControllers.firstObject;
     return vc.currenPageNumber;
+}
+
+- (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber;{
+    if (_contentVCDic == nil) {
+        _contentVCDic = [NSMutableDictionary dictionary];
+    }
+    UIViewController<SYPageViewControllerContentViewControllerProtocol> * vc = [self.contentVCDic objectForKey:@(pageNumber)];
+    if (vc == nil) {
+        vc  = [[[NSClassFromString(className) class] alloc]init];
+        vc.currenPageNumber = pageNumber;
+        [self.contentVCDic setObject:vc forKey:@(pageNumber)];
+    }
+    return vc;
 }
 - (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)dequeueReusableContentViewControllerWithClassName:(NSString *)className forPageNumber:(NSUInteger)pageNumber{
     NSDictionary <NSNumber *,UIViewController<SYPageViewControllerContentViewControllerProtocol> *> * reusVCs = [self.contentViewControllerDic objectForKey:className];
@@ -133,8 +141,6 @@
     UIViewController<SYPageViewControllerContentViewControllerProtocol> * currentVC = (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)viewController;
     if (currentVC.currenPageNumber > 0)
     {
-        self.currentIndex --;
-        NSLog(@"index:%ld",self.currentIndex);
        __block UIViewController<SYPageViewControllerContentViewControllerProtocol> *svc = [self.dataSource willDisplayVisiableViewControllerWithPageNumber:currentVC.currenPageNumber - 1];
        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             //懒加载VC导致viewDidload方法在didDisplayVisiableViewController后调用！！！
@@ -149,8 +155,6 @@
     UIViewController<SYPageViewControllerContentViewControllerProtocol> * currentVC = (UIViewController<SYPageViewControllerContentViewControllerProtocol> *)viewController;
     if (currentVC.currenPageNumber < [self.dataSource maxPageCount] -1)
     {
-        self.currentIndex ++;
-        NSLog(@"index:%ld",self.currentIndex);
       __block  UIViewController<SYPageViewControllerContentViewControllerProtocol> *svc = [self.dataSource willDisplayVisiableViewControllerWithPageNumber:currentVC.currenPageNumber + 1];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
            // 懒加载VC导致viewDidload方法在didDisplayVisiableViewController后调用！！！
@@ -187,7 +191,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (self.delegate && [self.delegate respondsToSelector:@selector(pageViewController:contentScrollViewDidEndScroll:)]) {
         [self.delegate pageViewController:self contentScrollViewDidEndScroll:self.contentScrollView];
-        self.currentIndex = self.visiableViewControllerCurrenPageNumber;
+
     }
 }
 #pragma mark - Getter method
